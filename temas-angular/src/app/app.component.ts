@@ -1,0 +1,98 @@
+import { Component } from '@angular/core';
+import { TemasComponent } from './temas/temas.component';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [TemasComponent],
+  template: `
+    <div class="app-shell">
+      <header class="topbar">
+        <div class="topbar-inner">
+          <div class="topbar-brand">
+            <span class="brand-text">Angular</span>
+          </div>
+          <span class="topbar-version">v21</span>
+        </div>
+      </header>
+      <main>
+        <app-temas></app-temas>
+      </main>
+    </div>
+  `,
+  styles: [`
+    .app-shell {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .topbar {
+      background: rgba(26, 26, 46, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .topbar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      font-size: 16px;
+      text-decoration: none;
+    }
+
+    .brand-icon {
+      width: 32px;
+      height: 32px;
+      background: var(--gradient-accent);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(229, 57, 53, 0.3);
+    }
+
+    .brand-text {
+      font-weight: 300;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-text strong {
+      font-weight: 700;
+      color: var(--angular-red-light);
+    }
+
+    .topbar-version {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 4px 12px;
+      border-radius: 20px;
+      letter-spacing: 0.5px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    main {
+      flex: 1;
+    }
+  `],
+})
+export class AppComponent {}

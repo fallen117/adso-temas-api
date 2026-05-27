@@ -1,0 +1,83 @@
+<div class="temas-container">
+
+  <div class="header">
+    <div class="header-left">
+      <div class="header-icon">A</div>
+      <h1>Gestion de Temas</h1>
+    </div>
+    <span class="badge">{{ temas.length }} registros</span>
+  </div>
+
+  @if (mensaje) {
+    <div class="alert" [ngClass]="'alert-' + mensaje.tipo">
+      {{ mensaje.texto }}
+    </div>
+  }
+
+  <div class="form-crear">
+    <input
+      type="text"
+      placeholder="Nombre del nuevo tema..."
+      [(ngModel)]="nuevoNombre"
+      (keyup.enter)="crearTema()"
+    />
+    <button class="btn-success" (click)="crearTema()">+ Agregar</button>
+    <!-- <button class="btn-refresh" (click)="cargarTemas()" [class.spinning]="cargando" title="Refrescar tabla">
+      <span class="refresh-icon">&#x21bb;</span>
+    </button> -->
+  </div>
+
+  @if (cargando) {
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <p>Cargando temas...</p>
+    </div>
+  } @else if (temas.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">A</div>
+      <p>No hay temas registrados aun.</p>
+    </div>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Nombre del Tema</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (tema of temas; track tema.id) {
+          <tr>
+            <td>{{ tema.id }}</td>
+
+            <td>
+              @if (editandoId === tema.id) {
+                <input
+                  class="edit-input"
+                  type="text"
+                  [(ngModel)]="editandoNombre"
+                  (keyup.enter)="guardarEdicion(tema.id)"
+                  (keyup.escape)="cancelarEdicion()"
+                />
+              } @else {
+                {{ tema.nombreTema }}
+              }
+            </td>
+
+            <td class="acciones">
+              @if (editandoId === tema.id) {
+                <button class="btn-primary" (click)="guardarEdicion(tema.id)">Guardar</button>
+                <button class="btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+              } @else {
+                <button class="btn-warning" (click)="iniciarEdicion(tema)">Editar</button>
+                <button class="btn-danger" (click)="eliminarTema(tema.id)">Eliminar</button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+</div>
