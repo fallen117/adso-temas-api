@@ -143,28 +143,44 @@ button:active {
   backdrop-filter: blur(8px);
 }
 
-input[type="text"] {
+input[type="text"],
+input[type="date"] {
   width: 100%;
   padding: 10px 14px;
   border: 2px solid rgba(0, 0, 0, 0.08);
   border-radius: var(--radius-sm);
   font-size: 14px;
   font-family: inherit;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(8px);
   transition: all var(--transition);
   color: var(--text-primary);
+  color: white;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="date"]:focus {
   outline: none;
   border-color: var(--angular-red);
   box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.15);
-  background: rgba(255, 255, 255, 0.95);
+  color: white;
 }
 
-input[type="text"]::placeholder {
+input[type="text"]::placeholder,
+input[type="date"]::placeholder {
   color: var(--text-muted);
+}
+
+/* Forzar color del texto y calendario en date inputs */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.3);
+  cursor: pointer;
+  color: white;
+}
+
+input[type="date"]::-webkit-datetime-edit {
+  color: white;
+
 }
 
 .alert {

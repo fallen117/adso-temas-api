@@ -62,7 +62,7 @@ export class TemasService {
         const driverError = error.driverError as any;
         if (driverError?.code === '23503') {
           throw new ConflictException(
-            'No se puede eliminar el tema porque tiene registros asociados en tema_aprendiz.',
+            'No se puede eliminar el tema porque tiene registros asociados a un aprendiz.',
           );
         }
       }

@@ -1,0 +1,124 @@
+<div class="aprendices-container">
+
+  <div class="header">
+    <div class="header-left">
+      <div class="header-icon">Ap</div>
+      <h1>Gestion de Aprendices</h1>
+    </div>
+    <span class="badge">{{ aprendices.length }} registros</span>
+  </div>
+
+  @if (mensaje) {
+    <div class="alert" [ngClass]="'alert-' + mensaje.tipo">
+      {{ mensaje.texto }}
+    </div>
+  }
+
+  <div class="form-crear">
+    <input
+      type="text"
+      placeholder="Cedula..."
+      [(ngModel)]="nuevoCedula"
+      (keyup.enter)="crearAprendiz()"
+    />
+    <input
+      type="text"
+      placeholder="Nombre completo..."
+      [(ngModel)]="nuevoNombreCompleto"
+      (keyup.enter)="crearAprendiz()"
+    />
+    <input
+      type="date"
+      [(ngModel)]="nuevaFechaNacimiento"
+      (keyup.enter)="crearAprendiz()"
+    />
+    <button class="btn-success" (click)="crearAprendiz()">+ Agregar</button>
+    <!-- <button class="btn-refresh" (click)="cargarAprendices()" [class.spinning]="cargando" title="Refrescar tabla">
+      <span class="refresh-icon">&#x21bb;</span>
+    </button> -->
+  </div>
+
+  @if (cargando) {
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <p>Cargando aprendices...</p>
+    </div>
+  } @else if (aprendices.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">Ap</div>
+      <p>No hay aprendices registrados aun.</p>
+    </div>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Cedula</th>
+          <th>Nombre Completo</th>
+          <th>Fecha Nacimiento</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (aprendiz of aprendices; track aprendiz.id) {
+          <tr>
+            <td>{{ aprendiz.id }}</td>
+
+            <td>
+              @if (editandoId === aprendiz.id) {
+                <input
+                  class="edit-input"
+                  type="text"
+                  [(ngModel)]="editandoCedula"
+                  (keyup.enter)="guardarEdicion(aprendiz.id)"
+                  (keyup.escape)="cancelarEdicion()"
+                />
+              } @else {
+                {{ aprendiz.cedula }}
+              }
+            </td>
+
+            <td>
+              @if (editandoId === aprendiz.id) {
+                <input
+                  class="edit-input"
+                  type="text"
+                  [(ngModel)]="editandoNombreCompleto"
+                  (keyup.enter)="guardarEdicion(aprendiz.id)"
+                  (keyup.escape)="cancelarEdicion()"
+                />
+              } @else {
+                {{ aprendiz.nombreCompleto }}
+              }
+            </td>
+
+            <td>
+              @if (editandoId === aprendiz.id) {
+                <input
+                  class="edit-input"
+                  type="date"
+                  [(ngModel)]="editandoFechaNacimiento"
+                  (keyup.enter)="guardarEdicion(aprendiz.id)"
+                  (keyup.escape)="cancelarEdicion()"
+                />
+              } @else {
+                {{ aprendiz.fechaNacimiento }}
+              }
+            </td>
+
+            <td class="acciones">
+              @if (editandoId === aprendiz.id) {
+                <button class="btn-primary" (click)="guardarEdicion(aprendiz.id)">Guardar</button>
+                <button class="btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
+              } @else {
+                <button class="btn-warning" (click)="iniciarEdicion(aprendiz)">Editar</button>
+                <button class="btn-danger" (click)="eliminarAprendiz(aprendiz.id)">Eliminar</button>
+              }
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+</div>

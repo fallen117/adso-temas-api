@@ -1,22 +1,39 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { TemasComponent } from './temas/temas.component';
+import { AprendicesComponent } from './aprendices/aprendices.component';
+
+type Tab = 'temas' | 'aprendices';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [TemasComponent],
+  imports: [CommonModule, TemasComponent, AprendicesComponent],
   template: `
     <div class="app-shell">
       <header class="topbar">
         <div class="topbar-inner">
           <div class="topbar-brand">
-            <span class="brand-text">Angular</span>
+            <span class="brand-text">Admin</span>
           </div>
-          <span class="topbar-version">v21</span>
+          <div class="topbar-tabs">
+            <button
+              class="tab-btn"
+              [class.active]="activeTab === 'temas'"
+              (click)="activeTab = 'temas'"
+            >Temas</button>
+            <button
+              class="tab-btn"
+              [class.active]="activeTab === 'aprendices'"
+              (click)="activeTab = 'aprendices'"
+            >Aprendices</button>
+          </div>
+          <span class="topbar-version">Angular v21</span>
         </div>
       </header>
       <main>
-        <app-temas></app-temas>
+        <app-temas *ngIf="activeTab === 'temas'"></app-temas>
+        <app-aprendices *ngIf="activeTab === 'aprendices'"></app-aprendices>
       </main>
     </div>
   `,
@@ -38,12 +55,13 @@ import { TemasComponent } from './temas/temas.component';
     }
 
     .topbar-inner {
-      max-width: 860px;
+      max-width: 960px;
       margin: 0 auto;
       padding: 12px 24px;
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 16px;
     }
 
     .topbar-brand {
@@ -53,20 +71,7 @@ import { TemasComponent } from './temas/temas.component';
       color: #fff;
       font-size: 16px;
       text-decoration: none;
-    }
-
-    .brand-icon {
-      width: 32px;
-      height: 32px;
-      background: var(--gradient-accent);
-      border-radius: 8px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 14px;
-      color: #fff;
-      box-shadow: 0 2px 8px rgba(229, 57, 53, 0.3);
+      white-space: nowrap;
     }
 
     .brand-text {
@@ -74,9 +79,32 @@ import { TemasComponent } from './temas/temas.component';
       letter-spacing: 0.5px;
     }
 
-    .brand-text strong {
-      font-weight: 700;
-      color: var(--angular-red-light);
+    .topbar-tabs {
+      display: flex;
+      gap: 4px;
+    }
+
+    .tab-btn {
+      background: transparent;
+      color: rgba(255, 255, 255, 0.55);
+      border: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .tab-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+    }
+
+    .tab-btn.active {
+      background: var(--gradient-accent);
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(229, 57, 53, 0.3);
     }
 
     .topbar-version {
@@ -88,6 +116,7 @@ import { TemasComponent } from './temas/temas.component';
       border-radius: 20px;
       letter-spacing: 0.5px;
       border: 1px solid rgba(255, 255, 255, 0.08);
+      white-space: nowrap;
     }
 
     main {
@@ -95,4 +124,6 @@ import { TemasComponent } from './temas/temas.component';
     }
   `],
 })
-export class AppComponent {}
+export class AppComponent {
+  activeTab: Tab = 'temas';
+}
