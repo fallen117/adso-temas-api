@@ -1,9 +1,10 @@
 import {
   Injectable,
   NotFoundException,
+  ConflictException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { Repository, QueryFailedError } from 'typeorm';
 import { Tema } from './entities/tema.entity';
 import { CreateTemaDto } from './dto/create-tema.dto';
 import { UpdateTemaDto } from './dto/update-tema.dto';
@@ -52,10 +53,21 @@ export class TemasService {
 
   // ── DELETE ────────────────────────────────────────────────────────────
   async remove(id: number): Promise<{ message: string }> {
-    // Verificamos que exista antes de eliminar
     await this.findOne(id);
 
-    await this.temaRepository.delete(id);
+    try {
+      await this.temaRepository.delete(id);
+    } catch (error) {
+      if (error instanceof QueryFailedError) {
+        const driverError = error.driverError as any;
+        if (driverError?.code === '23503') {
+          throw new ConflictException(
+            'No se puede eliminar el tema porque tiene registros asociados en tema_aprendiz.',
+          );
+        }
+      }
+      throw error;
+    }
 
     return { message: `Tema con id ${id} eliminado exitosamente.` };
   }
