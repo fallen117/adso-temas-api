@@ -17,6 +17,16 @@ export class AprendizService {
   ) {}
 
   async create(createAprendizDto: CreateAprendizDto): Promise<Aprendiz> {
+    const existente = await this.aprendizRepository.findOne({
+      where: { cedula: createAprendizDto.cedula },
+    });
+
+    if (existente) {
+      throw new ConflictException(
+        'Ya existe un aprendiz con esa cedula.',
+      );
+    }
+
     const nuevoAprendiz = this.aprendizRepository.create(createAprendizDto);
     return await this.aprendizRepository.save(nuevoAprendiz);
   }
@@ -39,6 +49,18 @@ export class AprendizService {
 
   async update(id: number, updateAprendizDto: UpdateAprendizDto): Promise<Aprendiz> {
     const aprendiz = await this.findOne(id);
+
+    if (updateAprendizDto.cedula !== undefined) {
+      const existente = await this.aprendizRepository.findOne({
+        where: { cedula: updateAprendizDto.cedula },
+      });
+
+      if (existente && existente.id !== id) {
+        throw new ConflictException(
+          'Ya existe otro aprendiz con esa cedula.',
+        );
+      }
+    }
 
     const aprendizActualizado = this.aprendizRepository.merge(aprendiz, updateAprendizDto);
     return await this.aprendizRepository.save(aprendizActualizado);

@@ -1,0 +1,77 @@
+<div class="ta-container">
+
+  <div class="header">
+    <div class="header-left">
+      <div class="header-icon">Ta</div>
+      <h1>Asignaciones Tema-Aprendiz</h1>
+    </div>
+    <span class="badge">{{ asignaciones.length }} registros</span>
+  </div>
+
+  @if (mensaje) {
+    <div class="alert" [ngClass]="'alert-' + mensaje.tipo">
+      {{ mensaje.texto }}
+    </div>
+  }
+
+  <div class="form-crear">
+    <select [(ngModel)]="selectedAprendizId">
+      <option [value]="0" disabled>Seleccionar aprendiz...</option>
+      @for (a of aprendices; track a.id) {
+        <option [value]="a.id">{{ a.nombreCompleto }}</option>
+      }
+    </select>
+
+    <select [(ngModel)]="selectedTemaId">
+      <option [value]="0" disabled>Seleccionar tema...</option>
+      @for (t of temas; track t.id) {
+        <option [value]="t.id">{{ t.nombreTema }}</option>
+      }
+    </select>
+
+    <button class="btn-success" (click)="crearAsignacion()">+ Asignar</button>
+    <button class="btn-refresh" (click)="cargarTodo()" [class.spinning]="cargando" title="Refrescar tabla">
+      <span class="refresh-icon">&#x21bb;</span>
+    </button>
+  </div>
+
+  @if (cargando) {
+    <div class="loading-card">
+      <div class="spinner"></div>
+      <p>Cargando asignaciones...</p>
+    </div>
+  } @else if (asignaciones.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">TA</div>
+      <p>No hay asignaciones registradas aun.</p>
+    </div>
+  } @else {
+    <table>
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>ID Aprendiz</th>
+          <th>Aprendiz</th>
+          <th>ID Tema</th>
+          <th>Tema</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (item of asignaciones; track item.id) {
+          <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.idAprendiz }}</td>
+            <td>{{ item.aprendiz?.nombreCompleto ?? '—' }}</td>
+            <td>{{ item.idTema }}</td>
+            <td>{{ item.tema?.nombreTema ?? '—' }}</td>
+            <td>
+              <button class="btn-danger" (click)="eliminarAsignacion(item.id)">Eliminar</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  }
+
+</div>

@@ -19,6 +19,16 @@ export class TemasService {
 
   // ── CREATE ────────────────────────────────────────────────────────────
   async create(createTemaDto: CreateTemaDto): Promise<Tema> {
+    const existente = await this.temaRepository.findOne({
+      where: { nombreTema: createTemaDto.nombreTema },
+    });
+
+    if (existente) {
+      throw new ConflictException(
+        'Ya existe un tema con ese nombre.',
+      );
+    }
+
     const nuevoTema = this.temaRepository.create(createTemaDto);
     return await this.temaRepository.save(nuevoTema);
   }
@@ -43,10 +53,20 @@ export class TemasService {
 
   // ── UPDATE ────────────────────────────────────────────────────────────
   async update(id: number, updateTemaDto: UpdateTemaDto): Promise<Tema> {
-    // Verificamos que exista antes de actualizar
     const tema = await this.findOne(id);
 
-    // merge aplica solo los campos que vienen en el DTO
+    if (updateTemaDto.nombreTema !== undefined) {
+      const existente = await this.temaRepository.findOne({
+        where: { nombreTema: updateTemaDto.nombreTema },
+      });
+
+      if (existente && existente.id !== id) {
+        throw new ConflictException(
+          'Ya existe otro tema con ese nombre.',
+        );
+      }
+    }
+
     const temaActualizado = this.temaRepository.merge(tema, updateTemaDto);
     return await this.temaRepository.save(temaActualizado);
   }

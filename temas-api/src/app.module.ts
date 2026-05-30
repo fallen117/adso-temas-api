@@ -5,6 +5,8 @@ import { TemasModule } from './temas/temas.module';
 import { Tema } from './temas/entities/tema.entity';
 import { AprendizModule } from './aprendiz/aprendiz.module';
 import { Aprendiz } from './aprendiz/entities/aprendiz.entity';
+import { TemaAprendizModule } from './tema-aprendiz/tema-aprendiz.module';
+import { TemaAprendiz } from './tema-aprendiz/entities/tema-aprendiz.entity';
 
 @Module({
   imports: [
@@ -26,7 +28,7 @@ import { Aprendiz } from './aprendiz/entities/aprendiz.entity';
         username: config.get<string>('DB_USERNAME'),
         password: config.get<string>('DB_PASSWORD'),
         schema: config.get<string>('DB_SCHEMA'),   // esquema "sena"
-        entities: [Tema, Aprendiz],
+        entities: [Tema, Aprendiz, TemaAprendiz],
         synchronize: false,   // ⚠️ false en prod — la tabla ya existe
         ssl: { rejectUnauthorized: false }, // requerido por Supabase pooler
         logging: config.get('NODE_ENV') === 'development',
@@ -36,6 +38,7 @@ import { Aprendiz } from './aprendiz/entities/aprendiz.entity';
     // ── 3. Módulos de la app ─────────────────────────────────────────────
     TemasModule,
     AprendizModule,
+    TemaAprendizModule,
   ],
 })
 export class AppModule {}

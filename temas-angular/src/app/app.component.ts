@@ -1,14 +1,10 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TemasComponent } from './temas/temas.component';
-import { AprendicesComponent } from './aprendices/aprendices.component';
-
-type Tab = 'temas' | 'aprendices';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, TemasComponent, AprendicesComponent],
+  imports: [RouterModule],
   template: `
     <div class="app-shell">
       <header class="topbar">
@@ -17,23 +13,27 @@ type Tab = 'temas' | 'aprendices';
             <span class="brand-text">Admin</span>
           </div>
           <div class="topbar-tabs">
-            <button
+            <a
               class="tab-btn"
-              [class.active]="activeTab === 'temas'"
-              (click)="activeTab = 'temas'"
-            >Temas</button>
-            <button
+              routerLink="/api/v1/temas"
+              routerLinkActive="active"
+            >Temas</a>
+            <a
               class="tab-btn"
-              [class.active]="activeTab === 'aprendices'"
-              (click)="activeTab = 'aprendices'"
-            >Aprendices</button>
+              routerLink="/api/v1/aprendices"
+              routerLinkActive="active"
+            >Aprendices</a>
+            <a
+              class="tab-btn"
+              routerLink="/api/v1/tema-aprendiz"
+              routerLinkActive="active"
+            >Asignaciones</a>
           </div>
           <span class="topbar-version">Angular v21</span>
         </div>
       </header>
       <main>
-        <app-temas *ngIf="activeTab === 'temas'"></app-temas>
-        <app-aprendices *ngIf="activeTab === 'aprendices'"></app-aprendices>
+        <router-outlet></router-outlet>
       </main>
     </div>
   `,
@@ -87,7 +87,7 @@ type Tab = 'temas' | 'aprendices';
     .tab-btn {
       background: transparent;
       color: rgba(255, 255, 255, 0.55);
-      border: none;
+      text-decoration: none;
       padding: 6px 14px;
       border-radius: 8px;
       font-size: 13px;
@@ -124,6 +124,4 @@ type Tab = 'temas' | 'aprendices';
     }
   `],
 })
-export class AppComponent {
-  activeTab: Tab = 'temas';
-}
+export class AppComponent {}
