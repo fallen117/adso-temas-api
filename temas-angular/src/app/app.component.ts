@@ -48,7 +48,6 @@ import { RouterModule } from '@angular/router';
       background: rgba(26, 26, 46, 0.8);
       backdrop-filter: blur(16px);
       -webkit-backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
       position: sticky;
       top: 0;
       z-index: 100;

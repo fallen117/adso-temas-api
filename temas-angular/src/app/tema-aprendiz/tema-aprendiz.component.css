@@ -62,12 +62,11 @@
   display: flex;
   gap: 10px;
   margin-bottom: 24px;
-  background: var(--surface);
+  background: rgb(0 0 0 / 17%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-radius: var(--radius);
   padding: 20px 24px;
-  border: 1px solid var(--surface-border);
   box-shadow: var(--shadow-sm);
   flex-wrap: wrap;
 }
@@ -80,10 +79,10 @@
   border-radius: var(--radius-sm);
   font-size: 14px;
   font-family: inherit;
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(8px);
   transition: all var(--transition);
-  color: var(--text-primary);
+  color: #8d8d8e;
   cursor: pointer;
   appearance: auto;
 }
