@@ -143,6 +143,28 @@ button:active {
   backdrop-filter: blur(8px);
 }
 
+select {
+  width: 100%;
+  padding: 10px 14px;
+  border: 2px solid rgba(0, 0, 0, 0.08);
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-family: inherit;
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(8px);
+  transition: all var(--transition);
+  color: var(--text-primary);
+  cursor: pointer;
+  appearance: auto;
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--angular-red);
+  box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.15);
+  background: rgba(255, 255, 255, 0.95);
+}
+
 input[type="text"],
 input[type="date"] {
   width: 100%;
@@ -151,11 +173,10 @@ input[type="date"] {
   border-radius: var(--radius-sm);
   font-size: 14px;
   font-family: inherit;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(8px);
   transition: all var(--transition);
   color: var(--text-primary);
-  color: white;
 }
 
 input[type="text"]:focus,
@@ -163,7 +184,7 @@ input[type="date"]:focus {
   outline: none;
   border-color: var(--angular-red);
   box-shadow: 0 0 0 3px rgba(229, 57, 53, 0.15);
-  color: white;
+  background: rgba(255, 255, 255, 0.95);
 }
 
 input[type="text"]::placeholder,
@@ -171,16 +192,13 @@ input[type="date"]::placeholder {
   color: var(--text-muted);
 }
 
-/* Forzar color del texto y calendario en date inputs */
 input[type="date"]::-webkit-calendar-picker-indicator {
-  filter: invert(0.3);
+  filter: none;
   cursor: pointer;
-  color: white;
 }
 
 input[type="date"]::-webkit-datetime-edit {
-  color: white;
-
+  color: var(--text-primary);
 }
 
 .alert {
@@ -203,4 +221,122 @@ input[type="date"]::-webkit-datetime-edit {
   background: rgba(255, 235, 238, 0.85);
   color: #C62828;
   border-color: rgba(244, 67, 54, 0.3);
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+
+  .aprendices-container,
+  .temas-container,
+  .ta-container {
+    padding: 24px 16px !important;
+  }
+
+  .header {
+    padding: 18px 20px !important;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .header h1 {
+    font-size: 18px !important;
+  }
+
+  .header-icon {
+    width: 36px !important;
+    height: 36px !important;
+    font-size: 14px !important;
+  }
+
+  .badge {
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+  }
+
+  .form-crear {
+    padding: 16px !important;
+    flex-direction: column;
+  }
+
+  .form-crear input,
+  .form-crear select {
+    min-width: 0 !important;
+    width: 100%;
+  }
+
+  .form-crear button {
+    width: 100%;
+    justify-content: center;
+  }
+
+  table {
+    font-size: 13px;
+  }
+
+  th,
+  td {
+    padding: 10px 12px !important;
+  }
+
+  .acciones {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .acciones button {
+    width: 100%;
+    justify-content: center;
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .edit-input {
+    min-width: 80px !important;
+  }
+
+  .loading-card,
+  .empty-state {
+    padding: 32px 20px !important;
+  }
+
+  .empty-icon {
+    font-size: 36px !important;
+  }
+
+  .btn-refresh {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+
+  .aprendices-container,
+  .temas-container,
+  .ta-container {
+    padding: 16px 12px !important;
+  }
+
+  .header {
+    padding: 14px 16px !important;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .header h1 {
+    font-size: 16px !important;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  th,
+  td {
+    padding: 8px 10px !important;
+  }
+
+  th {
+    font-size: 11px !important;
+  }
 }

@@ -121,6 +121,46 @@ import { RouterModule } from '@angular/router';
     main {
       flex: 1;
     }
+
+    @media (max-width: 768px) {
+      .topbar-inner {
+        padding: 10px 16px;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .topbar-tabs {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+      }
+
+      .tab-btn {
+        font-size: 12px;
+        padding: 5px 10px;
+      }
+
+      .topbar-version {
+        font-size: 10px;
+        padding: 3px 8px;
+      }
+
+      .brand-text {
+        font-size: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .topbar-inner {
+        padding: 8px 12px;
+        gap: 6px;
+      }
+
+      .tab-btn {
+        font-size: 11px;
+        padding: 4px 8px;
+      }
+    }
   `],
 })
 export class AppComponent {}
