@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 export class AprendicesService {
 
   private http = inject(HttpClient);
-  private readonly apiUrl = '${environment.apiUrl}/api/v1/aprendices';
+  private readonly apiUrl = `${environment.apiUrl}/api/v1/aprendices`;
 
   getAll(): Observable<Aprendiz[]> {
     return this.http.get<Aprendiz[]>(this.apiUrl);

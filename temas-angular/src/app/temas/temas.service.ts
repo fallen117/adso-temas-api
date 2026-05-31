@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 @Injectable({ providedIn: 'root' })
 export class TemasService {
 
-  private readonly apiUrl = '${environment.apiUrl}/api/v1/temas';
+  private readonly apiUrl = `${environment.apiUrl}/api/v1/temas`;
 
   constructor(private http: HttpClient) {}
 

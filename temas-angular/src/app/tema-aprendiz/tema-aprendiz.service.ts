@@ -8,7 +8,7 @@ import { environment } from '../../environments/environment';
 export class TemaAprendizService {
 
   private http = inject(HttpClient);
-  private readonly apiUrl = '${environment.apiUrl}/api/v1/tema-aprendiz';
+  private readonly apiUrl = `${environment.apiUrl}/api/v1/tema-aprendiz`;
 
   getAll(): Observable<TemaAprendiz[]> {
     return this.http.get<TemaAprendiz[]>(this.apiUrl);
