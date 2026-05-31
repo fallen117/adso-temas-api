@@ -2,12 +2,13 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Aprendiz, CreateAprendizDto, UpdateAprendizDto } from './aprendiz.model';
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AprendicesService {
 
   private http = inject(HttpClient);
-  private readonly apiUrl = 'http://localhost:3000/api/v1/aprendices';
+  private readonly apiUrl = '${environment.apiUrl}/api/v1/aprendices';
 
   getAll(): Observable<Aprendiz[]> {
     return this.http.get<Aprendiz[]>(this.apiUrl);
