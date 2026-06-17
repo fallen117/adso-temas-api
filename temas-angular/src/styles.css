@@ -223,6 +223,12 @@ input[type="date"]::-webkit-datetime-edit {
   border-color: rgba(244, 67, 54, 0.3);
 }
 
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
+}
+
 /* ── Responsive ──────────────────────────────────────────────── */
 
 @media (max-width: 768px) {
