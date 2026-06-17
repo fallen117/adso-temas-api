@@ -4,6 +4,29 @@
   padding: 40px 24px;
   position: relative;
   z-index: 1;
+  animation: fadeSlideUp 0.5s ease-out both;
+}
+
+.ta-container > .header {
+  animation: fadeSlideUp 0.5s ease-out both;
+  animation-delay: 0.05s;
+}
+
+.ta-container > .alert {
+  animation: fadeSlideUp 0.5s ease-out both;
+  animation-delay: 0.1s;
+}
+
+.ta-container > .form-crear {
+  animation: fadeSlideUp 0.5s ease-out both;
+  animation-delay: 0.15s;
+}
+
+.ta-container > .table-responsive,
+.ta-container > .loading-card,
+.ta-container > .empty-state {
+  animation: fadeSlideUp 0.5s ease-out both;
+  animation-delay: 0.2s;
 }
 
 .header {

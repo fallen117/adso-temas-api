@@ -4,6 +4,29 @@
   padding: 40px 24px;
   position: relative;
   z-index: 1;
+  animation: fadeSlideUp 0.5s ease-out both;
+}
+
+.aprendices-container > .header {
+  animation: fadeSlideUp 0.5s ease-out both;
+  animation-delay: 0.05s;
+}
+
+.aprendices-container > .alert {
+  animation: fadeSlideUp 0.5s ease-out both;
+  animation-delay: 0.1s;
+}
+
+.aprendices-container > .form-crear {
+  animation: fadeSlideUp 0.5s ease-out both;
+  animation-delay: 0.15s;
+}
+
+.aprendices-container > .table-responsive,
+.aprendices-container > .loading-card,
+.aprendices-container > .empty-state {
+  animation: fadeSlideUp 0.5s ease-out both;
+  animation-delay: 0.2s;
 }
 
 .header {
