@@ -27,7 +27,7 @@ import { RouterModule } from '@angular/router';
               class="tab-btn"
               routerLink="/api/v1/tema-aprendiz"
               routerLinkActive="active"
-            >Asignaciones</a>
+            >Intereses tema</a>
           </div>
           <span class="topbar-version">Angular v21</span>
         </div>
