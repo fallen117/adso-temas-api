@@ -15,7 +15,7 @@ export class GeminiService {
     }
 
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash-lite' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash-lite' });
 
     const prompt = `Eres un asistente educativo experto en pedagogía. Genera exactamente 3 tips de aprendizaje prácticos y útiles sobre el tema "${nombreTema}".
 Cada tip debe tener un campo "tip" con el número como string ("1", "2", "3") y un campo "detalle" con una explicación clara y concisa.
