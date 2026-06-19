@@ -29,6 +29,8 @@ export class TemasComponent implements OnInit {
 
   cargando = false;
 
+  creando = false;
+
   tipsModalAbierto = false;
   tipsSeleccionados: Tip[] = [];
 
@@ -58,13 +60,18 @@ export class TemasComponent implements OnInit {
     const nombre = this.nuevoNombre.trim();
     if (!nombre || nombre.length < 1) return;
 
+    this.creando = true;
+    this.cdr.detectChanges();
+
     this.temasService.create({ nombreTema: nombre }).subscribe({
       next: () => {
+        this.creando = false;
         this.nuevoNombre = '';
         this.cargarTemas();
         this.mostrarMensaje('Tema creado exitosamente.', 'success');
       },
       error: (err: HttpErrorResponse) => {
+        this.creando = false;
         console.error('Error al crear tema:', err);
         const msg = err.error && typeof err.error === 'object' && err.error?.message
           ? err.error.message

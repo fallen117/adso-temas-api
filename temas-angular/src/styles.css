@@ -223,6 +223,26 @@ input[type="date"]::-webkit-datetime-edit {
   border-color: rgba(244, 67, 54, 0.3);
 }
 
+.alert-info {
+  background: rgba(227, 242, 253, 0.9);
+  color: #1565C0;
+  border-color: rgba(33, 150, 243, 0.3);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.spinner-small {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(33, 150, 243, 0.25);
+  border-top-color: #1565C0;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
 .table-responsive {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;

@@ -21,11 +21,18 @@
       [(ngModel)]="nuevoNombre"
       (keyup.enter)="crearTema()"
     />
-    <button class="btn-success" (click)="crearTema()">+ Agregar</button>
+    <button class="btn-success" (click)="crearTema()" [disabled]="creando">+ Agregar</button>
     <!-- <button class="btn-refresh" (click)="cargarTemas()" [class.spinning]="cargando" title="Refrescar tabla">
       <span class="refresh-icon">&#x21bb;</span>
     </button> -->
   </div>
+
+  @if (creando) {
+    <div class="alert alert-info">
+      <span class="spinner-small"></span>
+      Generando tips con IA...
+    </div>
+  }
 
   @if (cargando) {
     <div class="loading-card">
