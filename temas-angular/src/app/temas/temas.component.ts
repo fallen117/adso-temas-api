@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
 import { TemasService } from './temas.service';
-import { Tema } from './tema.model';
+import { Tema, Tip } from './tema.model';
+import { TipsModalComponent } from './tips-modal.component';
 
 @Component({
   selector: 'app-temas',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TipsModalComponent],
   templateUrl: './temas.component.html',
   styleUrls: ['./temas.component.css'],
 })
@@ -27,6 +28,9 @@ export class TemasComponent implements OnInit {
   mensaje: { texto: string; tipo: 'success' | 'error' } | null = null;
 
   cargando = false;
+
+  tipsModalAbierto = false;
+  tipsSeleccionados: Tip[] = [];
 
   ngOnInit(): void {
     this.cargarTemas();
@@ -119,6 +123,20 @@ export class TemasComponent implements OnInit {
         this.cdr.detectChanges();
       },
     });
+  }
+
+  verTips(tema: Tema): void {
+    if (tema.tips && tema.tips.length > 0) {
+      this.tipsSeleccionados = tema.tips;
+      this.tipsModalAbierto = true;
+    } else {
+      this.mostrarMensaje('Este tema no tiene tips generados aun.', 'error');
+    }
+  }
+
+  cerrarTips(): void {
+    this.tipsModalAbierto = false;
+    this.tipsSeleccionados = [];
   }
 
   private mostrarMensaje(texto: string, tipo: 'success' | 'error'): void {

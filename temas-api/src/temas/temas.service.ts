@@ -2,19 +2,23 @@ import {
   Injectable,
   NotFoundException,
   ConflictException,
+  Logger,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, QueryFailedError } from 'typeorm';
 import { Tema } from './entities/tema.entity';
 import { CreateTemaDto } from './dto/create-tema.dto';
 import { UpdateTemaDto } from './dto/update-tema.dto';
+import { GeminiService } from './gemini.service';
 
 @Injectable()
 export class TemasService {
+  private readonly logger = new Logger(TemasService.name);
+
   constructor(
-    // TypeORM inyecta el repositorio de la entidad Tema
     @InjectRepository(Tema)
     private readonly temaRepository: Repository<Tema>,
+    private readonly geminiService: GeminiService,
   ) {}
 
   // ── CREATE ────────────────────────────────────────────────────────────
@@ -30,7 +34,16 @@ export class TemasService {
     }
 
     const nuevoTema = this.temaRepository.create(createTemaDto);
-    return await this.temaRepository.save(nuevoTema);
+    const temaGuardado = await this.temaRepository.save(nuevoTema);
+
+    try {
+      const tips = await this.geminiService.generarTips(createTemaDto.nombreTema);
+      temaGuardado.tips = tips;
+      return await this.temaRepository.save(temaGuardado);
+    } catch (error) {
+      this.logger.warn(`Tema creado pero no se pudieron generar tips: ${error.message}`);
+      return temaGuardado;
+    }
   }
 
   // ── READ ALL ──────────────────────────────────────────────────────────

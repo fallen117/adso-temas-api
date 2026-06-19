@@ -1,0 +1,16 @@
+<div class="modal-overlay" (click)="cerrar()">
+  <div class="modal-card" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Tips de Aprendizaje</h2>
+      <button class="btn-close" (click)="cerrar()">&times;</button>
+    </div>
+    <div class="modal-body">
+      @for (tip of tips; track $index) {
+        <div class="tip-card">
+          <div class="tip-number">Tip {{ tip.tip }}</div>
+          <p class="tip-detail">{{ tip.detalle }}</p>
+        </div>
+      }
+    </div>
+  </div>
+</div>

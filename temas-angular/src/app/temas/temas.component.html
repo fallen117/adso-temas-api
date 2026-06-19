@@ -71,6 +71,7 @@
                 <button class="btn-primary" (click)="guardarEdicion(tema.id)">Guardar</button>
                 <button class="btn-secondary" (click)="cancelarEdicion()">Cancelar</button>
               } @else {
+                <button class="btn-info" (click)="verTips(tema)">Tips</button>
                 <button class="btn-warning" (click)="iniciarEdicion(tema)">Editar</button>
                 <button class="btn-danger" (click)="eliminarTema(tema.id)">Eliminar</button>
               }
@@ -81,5 +82,9 @@
     </table>
     </div>
   }
+
+@if (tipsModalAbierto) {
+  <app-tips-modal [tips]="tipsSeleccionados" (close)="cerrarTips()" />
+}
 
 </div>

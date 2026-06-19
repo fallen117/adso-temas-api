@@ -1,6 +1,12 @@
+export interface Tip {
+  tip: string;
+  detalle: string;
+}
+
 export interface Tema {
   id: number;
   nombreTema: string;
+  tips?: Tip[];
 }
 
 export interface CreateTemaDto {

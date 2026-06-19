@@ -20,4 +20,7 @@ export class Tema {
 
   @Column({ name: 'nombre_tema', type: 'varchar', nullable: false })
   nombreTema: string;
+
+  @Column({ name: 'tips', type: 'jsonb', nullable: true })
+  tips: object;
 }
