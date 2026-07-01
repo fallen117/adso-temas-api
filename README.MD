@@ -110,18 +110,6 @@ npm install
 npm start
 ```
 
-### Variables de Entorno (`.env`)
-```env
-DB_HOST=<supabase-host>
-DB_PORT=6543
-DB_NAME=postgres
-DB_USERNAME=<user>
-DB_PASSWORD=<password>
-DB_SCHEMA=sena
-GEMINI_API_KEY=<google-ai-key>
-PORT=3000
-NODE_ENV=development
-```
 
 ---
 
