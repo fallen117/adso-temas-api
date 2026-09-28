@@ -110,6 +110,96 @@ npm install
 npm start
 ```
 
+---
+
+## Ejecucion con Docker
+
+Cada subproyecto tiene su propio `Dockerfile` y su propio `.dockerignore`
+(el contexto de build de Compose es por servicio, asi que un `.dockerignore`
+unico en la raiz no se aplicaria a ninguno).
+
+```
+adso-temas-api/
+├── docker-compose.yml      <- lo redactas tu
+├── temas-api/
+│   ├── Dockerfile
+│   ├── .dockerignore
+│   ├── .env.example        <- plantilla de variables
+│   └── .env                <- tus credenciales reales (NO se sube)
+└── temas-angular/
+    ├── Dockerfile
+    └── .dockerignore
+```
+
+### 1. Preparar las variables de la API
+
+```bash
+cd temas-api
+copy .env.example .env
+```
+
+Edita `.env` con la **cadena de conexion del Pooler** de Supabase
+(*Project Settings -> Database -> Connection string -> URI*), no la
+conexion directa. La directa resuelve unicamente IPv6 y falla en la
+mayoria de las redes domesticas.
+
+| Clave | Valor |
+|-------|-------|
+| `DB_HOST` | host del pooler, p. ej. `aws-0-us-east-1.pooler.supabase.com` |
+| `DB_PORT` | `5432` (transaction pooler) o `6543` (session pooler) |
+| `DB_NAME` | `postgres` |
+| `DB_USERNAME` | `postgres.<project_ref>` |
+| `DB_PASSWORD` | tu password de Supabase |
+| `DB_SCHEMA` | `sena` |
+| `GEMINI_API_KEY` | tu key de Google AI Studio (opcional) |
+| `NODE_ENV` | `development` habilita el log SQL de TypeORM |
+| `PORT` | `3000` |
+
+### 2. Levantar
+
+```bash
+docker compose up -d --build
+docker compose ps      # espera api -> healthy
+docker compose logs -f api
+```
+
+| Servicio | URL |
+|----------|-----|
+| Frontend | `http://localhost:4200` |
+| API | `http://localhost:3000/api/v1` |
+
+### 3. Verificar
+
+```bash
+curl http://localhost:3000/api/v1/temas
+docker compose down
+```
+
+### Como se conecta todo
+
+El navegador entra por `localhost:4200` (contenedor `web`). Los services
+Angular llaman a `http://localhost:3000/api/v1/*` segun
+`environment.development.ts`, que el compose publica hacia el contenedor
+`api`. Desde ahi TypeORM sale a Supabase por el pooler con TLS, porque
+`app.module.ts` fija `ssl: { rejectUnauthorized: false }`.
+
+El healthcheck del contenedor `api` consulta `/api/v1/temas`, que solo
+responde 200 si TypeORM logro abrir la conexion: si el servicio queda en
+`starting` o `unhealthy`, el problema son las credenciales de `.env`.
+
+### Notas de esta iteracion
+
+- Sin `bind mount`: para ver un cambio hay que reconstruir
+  (`--build`). El live reload con volumenes llega en la fase 2.
+- Etapa unica en ambos Dockerfiles. El multietapa, el usuario no root y
+  `nginx` sirviendo el `ng build` llegan en la fase 3.
+- Las credenciales nunca se hornean en la imagen: `.env` esta excluido en
+  `.dockerignore` y entra por `env_file` en tiempo de ejecucion.
+- **Pendiente para la fase 3**: las rutas del router de Angular son
+  `/api/v1/temas`, `/api/v1/aprendices` y `/api/v1/tema-aprendiz`
+  (`src/main.ts`). Un `location /api` en nginx las proxearia hacia la API
+  y romperia la navegacion. Habra que separar los prefijos antes de montar
+  el proxy inverso.
 
 ---
 
@@ -117,16 +207,22 @@ npm start
 
 ```
 /
+├── docker-compose.yml     # Orquestacion (api + web)
 ├── temas-api/          # Backend NestJS
 │   ├── src/
 │   │   ├── temas/      # CRUD temas + Gemini
 │   │   ├── aprendiz/   # CRUD aprendices
 │   │   └── tema-aprendiz/  # Asignacion N:M
+│   ├── Dockerfile
+│   ├── .dockerignore
+│   ├── .env.example
 │   └── package.json
 ├── temas-angular/      # Frontend Angular
-│   └── src/app/
-│       ├── temas/      # Gestion de temas + tips modal
-│       ├── aprendices/ # Gestion de aprendices
-│       └── tema-aprendiz/  # Asignacion intereses
+│   ├── src/app/
+│   │   ├── temas/      # Gestion de temas + tips modal
+│   │   ├── aprendices/ # Gestion de aprendices
+│   │   └── tema-aprendiz/  # Asignacion intereses
+│   ├── Dockerfile
+│   └── .dockerignore
 └── .gitignore
 ```

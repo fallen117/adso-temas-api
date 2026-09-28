@@ -1,0 +1,21 @@
+services:
+  api:
+    build: ./temas-api
+    container_name: adso-api
+    env_file: ./temas-api/.env
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+
+  web:
+    build: ./temas-angular
+    container_name: adso-web
+    ports:
+      - "4200:4200"
+    depends_on:
+      - api
+    restart: unless-stopped
+
+networks:
+  default:
+    name: adso-net

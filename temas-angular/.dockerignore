@@ -1,0 +1,24 @@
+# Contexto de build = temas-angular/
+
+# Dependencias: las reinstala "npm ci" dentro de la imagen. Si las copiaras,
+# estarian compiladas para Windows y noarian en Alpine.
+node_modules
+
+# Artefactos: "ng serve" compila en memoria, no escribe en disco.
+dist
+.angular
+
+# Secretos / configuracion local.
+.env
+.env.*
+!.env.example
+
+# Nada de esto se usa en tiempo de ejecucion.
+.git
+.gitignore
+.gitattributes
+Dockerfile
+.dockerignore
+README.MD
+*.log
+*.md
