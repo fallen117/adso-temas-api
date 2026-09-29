@@ -131,7 +131,6 @@ adso-temas-api/
     └── .dockerignore
 ```
 
-### 1. Preparar las variables de la API
 
 ```bash
 cd temas-api
@@ -155,7 +154,7 @@ mayoria de las redes domesticas.
 | `NODE_ENV` | `development` habilita el log SQL de TypeORM |
 | `PORT` | `3000` |
 
-### 2. Levantar
+### Levantar
 
 ```bash
 docker compose up -d --build
@@ -168,24 +167,13 @@ docker compose logs -f api
 | Frontend | `http://localhost:4200` |
 | API | `http://localhost:3000/api/v1` |
 
-### 3. Verificar
+### Verificar
 
 ```bash
 curl http://localhost:3000/api/v1/temas
 docker compose down
 ```
 
-### Como se conecta todo
-
-El navegador entra por `localhost:4200` (contenedor `web`). Los services
-Angular llaman a `http://localhost:3000/api/v1/*` segun
-`environment.development.ts`, que el compose publica hacia el contenedor
-`api`. Desde ahi TypeORM sale a Supabase por el pooler con TLS, porque
-`app.module.ts` fija `ssl: { rejectUnauthorized: false }`.
-
-El healthcheck del contenedor `api` consulta `/api/v1/temas`, que solo
-responde 200 si TypeORM logro abrir la conexion: si el servicio queda en
-`starting` o `unhealthy`, el problema son las credenciales de `.env`.
 
 ### Notas de esta iteracion
 
