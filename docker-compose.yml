@@ -5,7 +5,13 @@ services:
     env_file: ./temas-api/.env
     ports:
       - "3000:3000"
-    restart: unless-stopped
+    # "no" = arranque estrictamente manual. Nada se levanta solo: ni al
+    # reiniciar Windows, ni al abrir Docker Desktop. Tu workflow es encender
+    # los contenedores cuando los necesitas y apagarlos cuando no.
+    # (Con "unless-stopped", Docker Desktop los restauraria al arrancar solo
+    # tras un reinicio de Windows, porque la politica solo respeta las paradas
+    # que hagas TU, no las del daemon.)
+    restart: "no"
 
   web:
     build: ./temas-angular
@@ -14,7 +20,7 @@ services:
       - "4200:4200"
     depends_on:
       - api
-    restart: unless-stopped
+    restart: "no"
 
 networks:
   default:
