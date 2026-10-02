@@ -29,7 +29,7 @@ import { RouterModule } from '@angular/router';
               routerLinkActive="active"
             >Intereses tema</a>
           </div>
-          <span class="topbar-version">Angular v21</span>
+          <span class="topbar-version"> <i class="fa-brands fa-angular"></i> Angular v21</span>
         </div>
       </header>
       <main>
